@@ -1,0 +1,4 @@
+services:
+#    momono_front.example:
+#        class: Momono\FrontBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,6 @@
+services:
+    momono_backoffice.admin.user:
+        class: Momono\BackofficeBundle\Admin\UserAdmin
+        arguments: [~, Momono\DefaultBundle\Entity\User, MomonoBackofficeBundle:UserAdmin]
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: "User"}

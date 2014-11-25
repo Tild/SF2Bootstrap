@@ -1,0 +1,4 @@
+services:
+#    momono_default.example:
+#        class: Momono\DefaultBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
