@@ -1,4 +1,4 @@
 services:
-#    momono_default.example:
-#        class: Momono\DefaultBundle\Example
-#        arguments: [@service_id, "plain_value", %parameter%]
+    momono.security.userProvider:
+        class: Momono\DefaultBundle\Security\UserProvider
+        arguments: [@fos_user.user_manager]

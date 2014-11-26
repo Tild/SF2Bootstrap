@@ -83,5 +83,5 @@ sonata_block:
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
-    user_class: Momono\DefaultBundle\Entity\User
+    user_class: Momono\BackofficeBundle\Entity\Admin
 

@@ -1,15 +1,14 @@
 <?php
 
 namespace Momono\DefaultBundle\Entity;
+
 use FOS\UserBundle\Model\User as BaseUser;
-
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * User
  *
- * @ORM\Table(name="users")
+ * @ORM\Table(name="Users")
  * @ORM\Entity(repositoryClass="Momono\DefaultBundle\Entity\UserRepository")
  */
 class User extends BaseUser
@@ -26,9 +25,9 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", nullable=true, length=255)
+     * @ORM\Column(name="lastname", type="string", nullable=true, length=255)
      */
-    protected $name;
+    protected $lastname;
 
     /**
      * @var string

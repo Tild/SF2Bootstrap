@@ -1,6 +1,12 @@
 services:
+    momono_backoffice.admin.admin:
+        class: Momono\BackofficeBundle\Admin\AdminAdmin
+        arguments: [~, Momono\BackofficeBundle\Entity\Admin, MomonoBackofficeBundle:AdminAdmin, '%security.role_hierarchy.roles%']
+        tags:
+            - {name: sonata.admin, manager_type: orm, group: admin, label: "Gestion des Administrateurs"}
+
     momono_backoffice.admin.user:
         class: Momono\BackofficeBundle\Admin\UserAdmin
-        arguments: [~, Momono\DefaultBundle\Entity\User, MomonoBackofficeBundle:UserAdmin]
+        arguments: [~, Momono\DefaultBundle\Entity\User, SonataAdminBundle:CRUD]
         tags:
-            - {name: sonata.admin, manager_type: orm, group: admin, label: "User"}
+            - {name: sonata.admin, manager_type: orm, group: admin, label: "Gestion des Utilisateurs"}

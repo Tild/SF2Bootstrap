@@ -4,7 +4,7 @@ namespace Momono\BackofficeBundle\Controller;
 
 use Sonata\AdminBundle\Controller\CRUDController;
 
-class UserAdminController extends CRUDController
+class AdminAdminController extends CRUDController
 {
 
 }

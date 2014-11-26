@@ -8,12 +8,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
-use FOS\UserBundle\Model\UserManagerInterface;
-
 class UserAdmin extends Admin
 {
-    public $supportsPreviewMode = true;
-
     /**
      * @param DatagridMapper $datagridMapper
      */
@@ -21,14 +17,23 @@ class UserAdmin extends Admin
     {
         $datagridMapper
             ->add('username')
+            ->add('usernameCanonical')
             ->add('email')
+            ->add('emailCanonical')
             ->add('enabled')
+            ->add('salt')
             ->add('password')
             ->add('lastLogin')
             ->add('locked')
+            ->add('expired')
+            ->add('expiresAt')
+            ->add('confirmationToken')
+            ->add('passwordRequestedAt')
             ->add('roles')
+            ->add('credentialsExpired')
+            ->add('credentialsExpireAt')
             ->add('id')
-            ->add('name')
+            ->add('lastname')
             ->add('firstname')
         ;
     }
@@ -39,17 +44,24 @@ class UserAdmin extends Admin
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
-            ->add('id')
             ->add('username')
-
+            ->add('usernameCanonical')
             ->add('email')
-
+            ->add('emailCanonical')
             ->add('enabled')
+            ->add('salt')
+            ->add('password')
+            ->add('lastLogin')
             ->add('locked')
             ->add('expired')
+            ->add('expiresAt')
+            ->add('confirmationToken')
+            ->add('passwordRequestedAt')
             ->add('roles')
-
-            ->add('name')
+            ->add('credentialsExpired')
+            ->add('credentialsExpireAt')
+            ->add('id')
+            ->add('lastname')
             ->add('firstname')
             ->add('_action', 'actions', array(
                 'actions' => array(
@@ -67,47 +79,26 @@ class UserAdmin extends Admin
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-            ->with('General')
-                ->add('name')
-                ->add('firstname')
-                ->add('username')
-                ->add('email')
-                ->add('plainPassword', 'text')
-            ->end()
-            ->with('Groups')
-                //->add('groups', 'sonata_type_model', array('required' => false))
-            ->end()
-            ->with('Management')
-                ->add('roles', 'choice', array( 'multiple' => true, 'choices' => array("a", "b")))
-                ->add('locked', null, array('required' => false))
-                ->add('expired', null, array('required' => false))
-                ->add('enabled', null, array('required' => false))
-                ->add('credentialsExpired', null, array('required' => false))
-            ->end()
-            
+            ->add('username')
+            ->add('usernameCanonical')
+            ->add('email')
+            ->add('emailCanonical')
+            ->add('enabled')
+            ->add('salt')
+            ->add('password')
+            ->add('lastLogin')
+            ->add('locked')
+            ->add('expired')
+            ->add('expiresAt')
+            ->add('confirmationToken')
+            ->add('passwordRequestedAt')
+            ->add('roles')
+            ->add('credentialsExpired')
+            ->add('credentialsExpireAt')
+            ->add('id')
+            ->add('lastname')
+            ->add('firstname')
         ;
-    }
-
-    public function preUpdate($user)
-    {
-        $this->getUserManager()->updateCanonicalFields($user);
-        $this->getUserManager()->updatePassword($user);
-    }
-
-    /**
-     * @param UserManagerInterface $userManager
-     */
-    public function setUserManager(UserManagerInterface $userManager)
-    {
-        $this->userManager = $userManager;
-    }
-
-    /**
-     * @return UserManagerInterface
-     */
-    public function getUserManager()
-    {
-        return $this->userManager;
     }
 
     /**
@@ -116,20 +107,25 @@ class UserAdmin extends Admin
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
-            ->add('id')
             ->add('username')
+            ->add('usernameCanonical')
             ->add('email')
-            ->add('name')
-            ->add('firstname')
-            ->add('roles')
+            ->add('emailCanonical')
             ->add('enabled')
+            ->add('salt')
+            ->add('password')
             ->add('lastLogin')
             ->add('locked')
             ->add('expired')
             ->add('expiresAt')
+            ->add('confirmationToken')
+            ->add('passwordRequestedAt')
+            ->add('roles')
             ->add('credentialsExpired')
             ->add('credentialsExpireAt')
-
+            ->add('id')
+            ->add('lastname')
+            ->add('firstname')
         ;
     }
 }
