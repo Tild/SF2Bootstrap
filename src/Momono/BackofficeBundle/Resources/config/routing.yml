@@ -1,4 +1,8 @@
-
+backoffice_login:
+    pattern:   /admin/login
+    defaults:  { _controller: MomonoBackofficeBundle:Security:login }
+backoffice_login_check:
+    pattern:   /admin/login_check
 
 admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'

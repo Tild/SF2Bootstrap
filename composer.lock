@@ -2202,12 +2202,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/JMSDebuggingBundle.git",
-                "reference": "5566021922720429ab0daf9f2bbc32c0aa778af0"
+                "reference": "d0fd593ee27c68c823ac3d89de122eaa2a585e85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/JMSDebuggingBundle/zipball/5566021922720429ab0daf9f2bbc32c0aa778af0",
-                "reference": "5566021922720429ab0daf9f2bbc32c0aa778af0",
+                "url": "https://api.github.com/repos/schmittjoh/JMSDebuggingBundle/zipball/d0fd593ee27c68c823ac3d89de122eaa2a585e85",
+                "reference": "d0fd593ee27c68c823ac3d89de122eaa2a585e85",
                 "shasum": ""
             },
             "require": {
@@ -2226,10 +2226,8 @@
             ],
             "authors": [
                 {
-                    "name": "Johannes Schmitt",
-                    "email": "schmittjoh@gmail.com",
-                    "homepage": "https://github.com/schmittjoh",
-                    "role": "Developer of wrapped JMSSerializerBundle"
+                    "name": "Johannes M. Schmitt",
+                    "email": "schmittjoh@gmail.com"
                 }
             ],
             "description": "This bundle provides advanced debugging tools (for your Symfony2 project).",
@@ -2237,7 +2235,7 @@
             "keywords": [
                 "debugging"
             ],
-            "time": "2013-08-04 10:47:51"
+            "time": "2014-11-27 06:45:27"
         }
     ],
     "aliases": [],

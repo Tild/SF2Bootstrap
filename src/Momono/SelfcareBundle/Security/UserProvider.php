@@ -1,6 +1,6 @@
 <?php
 
-namespace Momono\DefaultBundle\Security;
+namespace Momono\SelfcareBundle\Security;
 
 use FOS\UserBundle\Security\UserProvider as BaseUserProvider;
 use Symfony\Component\Security\Core\User\UserInterface as SecurityUserInterface;

@@ -1,0 +1,11 @@
+selfcare_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix: /selfcare
+    
+selfcare_user_registration:
+    path: /selfcare/register
+    defaults: { _controller: MomonoSelfcareBundle:Registration:registerUser }
+
+momono_selfcare_homepage:
+    path: /selfcare/hello/{name}
+    defaults: { _controller: MomonoSelfcareBundle:Default:index }

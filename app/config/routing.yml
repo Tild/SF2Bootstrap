@@ -1,3 +1,7 @@
+momono_selfcare:
+    resource: "@MomonoSelfcareBundle/Resources/config/routing.yml"
+    prefix:   /
+
 momono_front:
     resource: "@MomonoFrontBundle/Resources/config/routing.yml"
     prefix:   /
