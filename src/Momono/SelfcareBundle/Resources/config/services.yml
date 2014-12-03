@@ -1,4 +1,0 @@
-services:
-    momono.security.userProvider:
-        class: Momono\SelfcareBundle\Security\UserProvider
-        arguments: [@fos_user.user_manager]

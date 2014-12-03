@@ -19,8 +19,6 @@ class AppKernel extends Kernel
             // Project
             new Momono\BackofficeBundle\MomonoBackofficeBundle(),
             new Momono\DefaultBundle\MomonoDefaultBundle(),
-            // FOS Bundle
-            new FOS\UserBundle\FOSUserBundle(),
             // sonata Project
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),

@@ -80,8 +80,4 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts:   [admin]
 
-fos_user:
-    db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-    firewall_name: main
-    user_class: Momono\BackofficeBundle\Entity\Admin
 

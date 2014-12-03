@@ -1,6 +1,4 @@
-selfcare_security:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-    prefix: /selfcare
+
     
 selfcare_user_registration:
     path: /selfcare/register

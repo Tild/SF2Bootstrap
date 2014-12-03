@@ -2,8 +2,8 @@
 
 namespace Momono\DefaultBundle\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * User
@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Users")
  * @ORM\Entity(repositoryClass="Momono\DefaultBundle\Entity\UserRepository")
  */
-class User extends BaseUser
+class User implements UserInterface, \Serializable
 {
     /**
      * @var integer
@@ -36,7 +36,27 @@ class User extends BaseUser
      */
     protected $firstname;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="groups", type="array")
+     */
+    private $groups;
 
+    /**
+     * @var array
+     *
+     * @ORM\Column(name="roles", type="array")
+     */
+    private $roles;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="salt", type="string", length=32)
+     */
+    private $salt;
+    
     public function __construct()
     {
         parent::__construct();
@@ -142,5 +162,104 @@ class User extends BaseUser
     public function getPassword()
     {
         return $this->password;
+    }
+    /**
+     * Set groups
+     *
+     * @param array $groups
+     * @return Admin
+     */
+    public function setGroups($groups)
+    {
+        $this->groups = $groups;
+
+        return $this;
+    }
+
+    /**
+     * Get groups
+     *
+     * @return array 
+     */
+    public function getGroups()
+    {
+        return $this->groups;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     * @return Admin
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Get roles
+     *
+     * @return array 
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return Admin
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string 
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+
+    public function eraseCredentials() {
+        
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUsername() {
+        return $this->email;
+    }
+ 
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
     }
 }

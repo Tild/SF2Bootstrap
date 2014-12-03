@@ -1,6 +1,6 @@
 security:
     encoders:
-        Simple\ProfileBundle\Entity\User:
+        Momono\BackofficeBundle\Admin\User:
             algorithm:        sha1
             encode_as_base64: false
             iterations:       1
@@ -41,7 +41,7 @@ security:
             form_login:
                 provider: fos_userbundle
                 csrf_provider: form.csrf_provider
-                check_path: fos_user_security_check
+                check_path: /selfcare/login_check
                 login_path: selfcare_user_registration
             logout:       true
             anonymous:    true
