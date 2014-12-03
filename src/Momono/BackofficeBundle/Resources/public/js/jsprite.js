@@ -1,6 +1,5 @@
 /*!
  * jQuery lightweight plugin boilerplate
- * Based on the jQuery lightweight plugin boilerplate by @ajpiano
  * Licensed under the MIT license
  */
 ;(function ( $, window, document, undefined ) {
@@ -104,22 +103,25 @@
         },
         
         /**
-         * @param {Object} params Options (eq {x:200, y:300, speed:30000})
+         * @param {Object} params Options (eq {x:200, y:300, speed:300})
          */
         moveTo: function(params) {
             var _this = this;
-            var speed = params.speed || this.options.speed;
-            
+            this.options.speed = params.speed || this.options.speed;
+            var duration, _distx, _disty = 0;
             var config = {};
             var css = {};
             if (typeof params.x !== "undefined") {
                 css.left = params.x;
+                _distx = Math.abs($(this._sprite).position().left - parseInt(params.x));
             }
             if (typeof params.y !== "undefined") {
                 css.top = params.y;
+                _disty = Math.abs($(this._sprite).position().top - params.y);
             }
-            
-            config.duration = speed;
+
+            duration = parseInt((Math.max(_distx, _disty) * 60000) / this.options.speed);
+            config.duration = duration;
             config.easing = "linear";
             
             config.complete = function() {

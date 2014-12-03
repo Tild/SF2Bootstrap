@@ -83,9 +83,9 @@
         
         var sprites = [];
         for(var sprCpt = 1; sprCpt<=8; sprCpt++) {
-            var opacity = (sprCpt >= 7) ? 0.8:1;
+            var opacity = (sprCpt >= 6) ? 0.7:1;
             
-            var speed = 60000 + Math.round(sprCpt/4)*4000;
+            var speed = 1000 + Math.round(sprCpt/4)*500;
             
             sprites[sprCpt-1] = $('.sea').jSprite({
                 sprite: '{{ asset('bundles/momonobackoffice/images/summer/sprites') }}/b' + sprCpt + '.png',
@@ -98,7 +98,7 @@
                 },
                 complete: function(e) {
                     $(e._sprite).css ({'left': WIDTH + Math.round(Math.random() * WIDTH) });
-                    e.moveTo({x:"-100px"});
+                    e.moveTo({x:"-400px"});
                 }
             });
         }
