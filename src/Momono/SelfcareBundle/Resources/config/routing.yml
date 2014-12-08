@@ -1,4 +1,9 @@
-
+selfcare_user_login:
+    path: /selfcare/login
+    defaults: { _controller: MomonoSelfcareBundle:Default:login }
+    
+selfcare_user_login_check:
+    pattern:   /selfcare/login_check
     
 selfcare_user_registration:
     path: /selfcare/register

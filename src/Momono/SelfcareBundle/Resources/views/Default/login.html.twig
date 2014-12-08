@@ -1,13 +1,8 @@
-{% extends "MomonoBackofficeBundle::security_default.html.twig" %}
-{% block title %}Administation{% endblock %}
-{% block panel_title %}Please sign in{% endblock %}
-                    
 {% block panel_body %}
-    {{ parent() }}
     {% if error %}
         <div>{{ error.message }}</div>
     {% endif %}
-    {{ form_start(form, {'method': 'POST', 'class':'flowup', 'role':'form', 'action': path('backoffice_login_check')}) }}
+    {{ form_start(form, {'method': 'POST', 'class':'flowup', 'role':'form', 'action': path('selfcare_user_login_check')}) }}
         <fieldset>
             <div class="form-group">
                 {{ form_label(form.username, 'E-mail') }}

@@ -1,9 +1,9 @@
 <?php
-namespace Momono\BackofficeBundle\Form;
-
+namespace Momono\SelfcareBundle\Form;
+ 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-
+ 
 class LoginType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -19,6 +19,6 @@ class LoginType extends AbstractType
     
     public function getName()
     {
-        return 'backoffice_login';
+        return 'selfcare_login';
     }
 }

@@ -1,20 +1,19 @@
 security:
     encoders:
-        Momono\BackofficeBundle\Admin\User:
+        Momono\BackofficeBundle\Entity\Admin:
             algorithm:        sha1
             encode_as_base64: false
             iterations:       1
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: ROLE_ADMIN
+        ROLE_SELFCARE:      ROLE_USER
+        ROLE_ADMIN:         ROLE_USER
+        ROLE_SUPER_ADMIN:   ROLE_ADMIN
 
     providers:
-        fos_adminbundle:
-            entity:
-                class: Momono\BackofficeBundle\Entity\Admin
-                property: email
-        fos_userbundle:
+        adminbundle:
+            entity: { class: MomonoBackofficeBundle:Admin }
+        userbundle:
             entity:
                 class: Momono\DefaultBundle\Entity\User
                 property: email
@@ -25,28 +24,33 @@ security:
             pattern: ^/admin
             form_login:
                 use_forward: false
-
+                username_parameter: backoffice_login[username]
+                password_parameter: backoffice_login[password]
                 # do not allow GET
                 post_only: true
-                provider: fos_adminbundle
+                provider: adminbundle
                 #csrf_provider: form.csrf_provider
                 intention: authenticate
                 check_path: /admin/login_check
                 login_path: /admin/login
-            logout:       true
-            anonymous:    true
-            
-        user:
+            logout:       
+                path:   /logout
+                target: /
+            anonymous:    true            
+        selfcare:
             pattern: ^/selfcare
             form_login:
-                provider: fos_userbundle
+                provider: userbundle
                 csrf_provider: form.csrf_provider
                 check_path: /selfcare/login_check
-                login_path: selfcare_user_registration
+                login_path: selfcare_user_login
             logout:       true
             anonymous:    true
-
-
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000 # 365 jours en secondes
+                path:     /
+                domain:   ~
     access_control:
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
@@ -55,4 +59,4 @@ security:
         - { path: ^/selfcare/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/selfcare/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/selfcare/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/selfcare/, role: ROLE_USER }
+        - { path: ^/selfcare/, role: ROLE_SELFCARE }

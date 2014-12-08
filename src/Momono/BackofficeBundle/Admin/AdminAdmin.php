@@ -10,8 +10,6 @@ use Sonata\AdminBundle\Show\ShowMapper;
 
 use FOS\UserBundle\Model\UserManagerInterface;
 
-use Symfony\Component\Security\Core\Role\RoleHierarchy;
-
 class AdminAdmin extends Admin
 {
     public $supportsPreviewMode = true;

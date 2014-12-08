@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Station
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="Momono\BackofficeBundle\Entity\StationRepository")
+ * @ORM\Entity(repositoryClass="Momono\DefaultBundle\Entity\StationRepository")
  */
 class Station
 {

@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * Admin
  *
  * @ORM\Table()
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Momono\BackofficeBundle\Entity\AdminRepository")
  */
 class Admin implements UserInterface, \Serializable
 {
@@ -25,9 +25,16 @@ class Admin implements UserInterface, \Serializable
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
      */
     private $email;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="username", type="string", length=255)
+     */
+    private $username;
 
     /**
      * @var boolean
@@ -64,6 +71,16 @@ class Admin implements UserInterface, \Serializable
      */
     private $salt;
 
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+    
+    public function __construct()
+    {
+        $this->isActive = true;
+        $this->salt = md5(uniqid(null, true));
+    }
 
     /**
      * Get id
@@ -230,6 +247,9 @@ class Admin implements UserInterface, \Serializable
     public function serialize() {
         return serialize(array(
             $this->id,
+            $this->username,
+            $this->email,
+            $this->password,
         ));
     }
 
@@ -239,6 +259,11 @@ class Admin implements UserInterface, \Serializable
     public function unserialize($serialized) {
         list (
             $this->id,
+            $this->username,
+            $this->email,
+            $this->password,
+            // see section on salt below
+            // $this->salt
         ) = unserialize($serialized);
     }
 }
