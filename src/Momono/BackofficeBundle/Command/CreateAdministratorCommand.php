@@ -115,6 +115,7 @@ class CreateAdministratorCommand extends ContainerAwareCommand {
         
         $user = new Admin();
         $user->setEmail($adminEmail);
+        $user->setUsername($adminEmail);
         $user->setSalt(md5(uniqid()));
         $user->setEnabled(true);
         $user->setRoles($roles);

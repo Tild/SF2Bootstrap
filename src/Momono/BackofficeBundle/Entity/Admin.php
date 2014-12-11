@@ -240,6 +240,15 @@ class Admin implements UserInterface, \Serializable
     public function getUsername() {
         return $this->email;
     }
+    
+    /**
+     * Username Mapping
+     * 
+     * @param string $username
+     */
+    public function setUsername($username) {
+        $this->email = $username;
+    }
 
     /**
      * @inheritDoc

@@ -40,6 +40,8 @@ security:
         selfcare:
             pattern: ^/selfcare
             form_login:
+                username_parameter: selfcare_login[username]
+                password_parameter: selfcare_login[password]
                 provider: userbundle
                 csrf_provider: form.csrf_provider
                 check_path: /selfcare/login_check
