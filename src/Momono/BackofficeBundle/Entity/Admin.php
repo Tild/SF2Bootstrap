@@ -49,6 +49,13 @@ class Admin implements UserInterface, \Serializable
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="plainpassword", type="string", length=255, nullable=true)
+     */
+    private $plainPassword;
 
     /**
      * @var array
@@ -247,7 +254,7 @@ class Admin implements UserInterface, \Serializable
      * @param string $username
      */
     public function setUsername($username) {
-        $this->email = $username;
+        $this->username = $username;
     }
 
     /**
@@ -274,5 +281,51 @@ class Admin implements UserInterface, \Serializable
             // see section on salt below
             // $this->salt
         ) = unserialize($serialized);
+    }
+
+    /**
+     * Set plainPassword
+     *
+     * @param string $plainPassword
+     * @return Admin
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
+    }
+
+    /**
+     * Get plainPassword
+     *
+     * @return string 
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Admin
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
     }
 }

@@ -1,0 +1,5 @@
+services:
+    DefaultBundle.user_manager:
+        class: Momono\DefaultBundle\Service\UserManager
+        arguments: ['@security.encoder_factory', '%security.role_hierarchy.roles%']
+    

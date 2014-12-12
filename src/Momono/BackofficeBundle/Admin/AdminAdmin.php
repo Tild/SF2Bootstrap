@@ -2,18 +2,24 @@
 
 namespace Momono\BackofficeBundle\Admin;
 
-use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\Admin as SonataAdmin;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Validator\ErrorElement;
+use Momono\DefaultBundle\Service\UserManager;
 
-use FOS\UserBundle\Model\UserManagerInterface;
-
-class AdminAdmin extends Admin
+class AdminAdmin extends SonataAdmin
 {
     public $supportsPreviewMode = true;
     private $roles;
+    
+    /**
+     *
+     * @var Momono\DefaultBundle\Service\UserManager 
+     */
+    private $userManager;
 
     /**
      * @param string $code
@@ -21,15 +27,17 @@ class AdminAdmin extends Admin
      * @param string $baseControllerName
      * @param string $rolesHierarchy
      */
-    public function __construct($code, $class, $baseControllerName, $rolesHierarchy)
+    public function __construct($code, $class, $baseControllerName, $rolesHierarchy, UserManager $userManager)
     {
         $roles = array();
 
         array_walk_recursive($rolesHierarchy, function($val) use (&$roles) {
-            $roles[] = $val;
+            $roles[$val] = $val;
         });
 
         $this->roles = array_unique($roles);
+        
+        $this->userManager = $userManager;
 
         parent::__construct($code, $class, $baseControllerName);
     }
@@ -40,12 +48,9 @@ class AdminAdmin extends Admin
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
-            ->add('username')
             ->add('email')
             ->add('enabled')
             ->add('password')
-            ->add('lastLogin')
-            ->add('locked')
             ->add('roles')
             ->add('id')
         ;
@@ -58,15 +63,9 @@ class AdminAdmin extends Admin
     {
         $listMapper
             ->add('id')
-            ->add('username')
-
             ->add('email')
-
             ->add('enabled')
-            ->add('locked')
-            ->add('expired')
             ->add('roles')
-
             ->add('_action', 'actions', array(
                 'actions' => array(
                     'show' => array(),
@@ -82,9 +81,10 @@ class AdminAdmin extends Admin
      */
     protected function configureFormFields(FormMapper $formMapper)
     {
+        $userRoles = $this->userManager->getAcceptedRoles();
+        
         $formMapper
             ->with('General')
-                ->add('username')
                 ->add('email')
                 ->add('plainPassword', 'text')
             ->end()
@@ -92,37 +92,39 @@ class AdminAdmin extends Admin
                 //->add('groups', 'sonata_type_model', array('required' => false))
             ->end()
             ->with('Management')
-                ->add('roles', 'choice', array( 'multiple' => true, 'choices' => $this->roles))
-                ->add('locked', null, array('required' => false))
-                ->add('expired', null, array('required' => false))
+                ->add('roles', 'choice', array( 'required' => false, 'multiple' => true, 'choices' => $userRoles))
                 ->add('enabled', null, array('required' => false))
-                ->add('credentialsExpired', null, array('required' => false))
             ->end()
             
         ;
     }
 
+    public function prePersist($user)
+    {    
+        $user->setSalt(md5(uniqid()));
+        $this->updateAdmin($user);
+    }
+    
     public function preUpdate($user)
     {
-        $this->getUserManager()->updateCanonicalFields($user);
-        $this->getUserManager()->updatePassword($user);
+        $this->updateAdmin($user);
     }
-
-    /**
-     * @param UserManagerInterface $userManager
-     */
-    public function setUserManager(UserManagerInterface $userManager)
+    
+    public function updateAdmin($user)
     {
-        $this->userManager = $userManager;
-    }
+        $user->setUsername($user->getEmail());
+        $password = trim($user->getPlainPassword());
+        if (!empty($password)) {
+            $this->userManager->setUserPassword($user, $password);
 
-    /**
-     * @return UserManagerInterface
-     */
-    public function getUserManager()
-    {
-        return $this->userManager;
+            //$encoder = $this->encoder->getEncoder($user);
+            //$user->setPassword($encoder->encodePassword($password, $user->getSalt()));
+        }
+        $user->setPlainPassword('');
+        
+        
     }
+    
 
     /**
      * @param ShowMapper $showMapper
@@ -131,17 +133,15 @@ class AdminAdmin extends Admin
     {
         $showMapper
             ->add('id')
-            ->add('username')
             ->add('email')
             ->add('roles')
             ->add('enabled')
-            ->add('lastLogin')
-            ->add('locked')
-            ->add('expired')
-            ->add('expiresAt')
-            ->add('credentialsExpired')
-            ->add('credentialsExpireAt')
 
         ;
+    }
+    
+    public function validate(ErrorElement $errorElement, $object)
+    {
+        
     }
 }

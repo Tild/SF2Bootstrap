@@ -8,8 +8,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Sensio\Bundle\GeneratorBundle\Command\Helper\DialogHelper;
 use Momono\BackofficeBundle\Entity\Admin;
 
-use Symfony\Component\Security\Core\Role\RoleHierarchy;
-
 class CreateAdministratorCommand extends ContainerAwareCommand {
 
     /**
@@ -22,7 +20,7 @@ class CreateAdministratorCommand extends ContainerAwareCommand {
                     new InputOption('password', '', InputOption::VALUE_REQUIRED, 'The password'),
                     new InputOption('role', null, InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'the roles'),
                 ))
-                ->setName('backoffice:create')
+                ->setName('backoffice:admin:new')
                 ->setDescription('Create a new administrator')
         ;
     }
@@ -68,7 +66,7 @@ class CreateAdministratorCommand extends ContainerAwareCommand {
         $adminRoles = $dialog->select(
             $output,
             '<question>Please select roles:</question>',
-            $this->getUserRoles(),
+            $this->getContainer()->get('DefaultBundle.user_manager')->getAcceptedRoles(),
             0,
             false,
             'The role "%s" is undefined',
@@ -104,7 +102,7 @@ class CreateAdministratorCommand extends ContainerAwareCommand {
             throw new \RuntimeException('Please define a role.');
         }
         
-        $allRoles = $this->getUserRoles();
+        $allRoles = $this->getContainer()->get('DefaultBundle.user_manager')->getAcceptedRoles();
         $roles = array();
         foreach ($adminRoles as $role) {
             if (empty($allRoles[$role])) {
@@ -119,8 +117,9 @@ class CreateAdministratorCommand extends ContainerAwareCommand {
         $user->setSalt(md5(uniqid()));
         $user->setEnabled(true);
         $user->setRoles($roles);
-        $encoder = $this->getContainer()->get('security.encoder_factory')->getEncoder($user);
-        $user->setPassword($encoder->encodePassword($adminPassword, $user->getSalt()));
+        
+        $this->getContainer()->get('DefaultBundle.user_manager')->setUserPassword($user, $adminPassword);
+        
         $em = $this->getContainer()->get('doctrine')->getManager();
         $em->persist($user);
         $em->flush();
@@ -140,17 +139,4 @@ class CreateAdministratorCommand extends ContainerAwareCommand {
 
         return $dialog;
     }
-    
-    /**
-     * 
-     */
-    private function getUserRoles() {
-        $rolesHierarchy = $this->getContainer()->get('security.role_hierarchy');
-        $roles = array();
-        array_walk_recursive($rolesHierarchy, function($val) use (&$roles) {
-            $roles[] = $val;
-        });
-        return array_unique($roles);
-    }
-
 }
