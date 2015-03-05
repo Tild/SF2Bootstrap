@@ -19,14 +19,14 @@ class AppKernel extends Kernel
             // Project
             new Momono\BackofficeBundle\MomonoBackofficeBundle(),
             new Momono\DefaultBundle\MomonoDefaultBundle(),
+            new Momono\FrontBundle\MomonoFrontBundle(),
+            new Momono\SelfcareBundle\MomonoSelfcareBundle(),
             // sonata Project
             new Sonata\CoreBundle\SonataCoreBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Sonata\AdminBundle\SonataAdminBundle(),
-            new Momono\FrontBundle\MomonoFrontBundle(),
-            new Momono\SelfcareBundle\MomonoSelfcareBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

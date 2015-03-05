@@ -20,9 +20,7 @@
         "incenteev/composer-parameter-handler": "~2.0",
         "sonata-project/admin-bundle": "~2.3",
         "sonata-project/doctrine-orm-admin-bundle": "~2.3",
-        "sonata-project/easy-extends-bundle": "~2.1",
-        "twitter/bootstrap": "3.*",
-        "components/jquery": "1.11.1"
+        "sonata-project/easy-extends-bundle": "~2.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",
