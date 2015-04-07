@@ -13,7 +13,7 @@ class SecurityController extends Controller
         $session = $request->getSession();
 
         $form = $this->createForm(new LoginType());
-        
+
         $form->handleRequest($request);
 
         if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
