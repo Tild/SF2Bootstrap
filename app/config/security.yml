@@ -19,7 +19,7 @@ security:
                 property: email
 
     firewalls:
-        admin:
+        admin_area:
             # host: ^backoffice\.example\.com$
             pattern: ^/admin
             form_login:
@@ -31,12 +31,12 @@ security:
                 provider: adminbundle
                 #csrf_provider: form.csrf_provider
                 intention: authenticate
-                check_path: /admin/login_check
-                login_path: /admin/login
+                check_path: backoffice_login_check 
+                login_path: backoffice_login
             logout:       
-                path:   /logout
-                target: /
-            anonymous:    true            
+                path: backoffice_logout
+                target: backoffice_login 
+            anonymous: ~ 
         selfcare:
             pattern: ^/selfcare
             form_login:
